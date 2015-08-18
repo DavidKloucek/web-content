@@ -23,10 +23,12 @@ Například pro callback `MyApp\Forms\Rules::validateNumber` se hledá `Nette.va
 Vytvoření vlastní sady validátorů se tak stává naprosto triviální záležitostí. Stačí vytvořit třídu se statickými metodami a příslušnými konstantami:
 
 /---php
+namespace App\Forms;
+
 class UserFormRules
 {
-	const USERNAME = 'UserFormRules::validateUsername';
-	const EMAIL_DOMAIN = 'UserFormRules::validateEmailDomain';
+	const USERNAME = 'App\Forms\UserFormRules::validateUsername';
+	const EMAIL_DOMAIN = 'App\Forms\UserFormRules::validateEmailDomain';
 
 	public static function validateUsername(IControl $control)
 	{
@@ -43,6 +45,9 @@ class UserFormRules
 Použití je pak velmi jednoduché:
 
 /---php
+use App\Forms\UserFormRules;
+//..
+
 $form->addText('username', /* label, velikost... */)
 	->addRule(UserFormRules::USERNAME, /* validační zpráva */);
 $form->addText('email', /* label, velikost... */)
@@ -54,11 +59,11 @@ Ve validačních metodách je vhodné zkontrolovat, zda je formulářový prvek 
 Můžeme také přidat validaci na klientovi:
 
 /---js
-Nette.validators.UserFormRules_validateUsername = function (elem, arg, value) {
+Nette.validators.AppFormsUserFormRules_validateUsername = function (elem, arg, value) {
 	// validace uživatelského jména (value)
 };
 
-Nette.validators.UserFormRules_validateEmailDomain = function (elem, domain, value) {
+Nette.validators.AppFormsUserFormRules_validateEmailDomain = function (elem, domain, value) {
 	// validace, zda value je e-mail z domény arg
 };
 \---
